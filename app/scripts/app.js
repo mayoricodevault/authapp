@@ -156,7 +156,6 @@ var app = angular
     $rootScope.$stateParams = $stateParams;
     $rootScope.$on('$stateChangeStart', function(event) {
         var token = store.get('token');
-        console.log(token);
         if (token) {
             console.log(jwtHelper.isTokenExpired(token));
             if (!jwtHelper.isTokenExpired(token)) {
@@ -168,10 +167,7 @@ var app = angular
                 // Either show the login page or use the refresh token to get a new idToken
                 $state.go('core.login');
             }
-        } else {
-            $state.go('core.login');
         }
-
     });
     $rootScope.$on('$stateChangeSuccess', function(event, toState) {
         console.log(toState);
@@ -198,4 +194,8 @@ var app = angular
             $state.go(loginRedirectPath);
         }
     });
-});
+})
+    .run(function(auth) {
+        // This hooks al auth events to check everything as soon as the app starts
+        auth.hookEvents();
+    });
