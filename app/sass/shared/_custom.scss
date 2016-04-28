@@ -1,0 +1,332 @@
+.btn-nostyle {
+  background: none;
+  border: 0;
+}
+
+.tile .tile-header .controls > li > button {
+  display: block;
+  height: 100%;
+  line-height: 43px;
+  min-width: 41px;
+  padding: 0 10px;
+  text-align: center;
+  color: $font-color-light;
+
+  &:hover {
+    color: $font-color;
+    text-decoration: none;
+  }
+}
+
+.tile-body {
+  .form-footer {
+    background-color: #f8f8f8;
+    margin: 40px -15px -15px;
+    padding: 20px;
+    border-top: 1px solid #eee;
+  }
+}
+
+.ng-table {
+  &.table-custom {
+    th {
+      text-align: left;
+      &.sortable {
+        padding-bottom: 6px;
+        @include transition(background-color .4s, color .4s);
+
+        &:hover {
+          background-color: #fafafa;
+          color: $lighter-primary;
+          border-color: $lighter-primary;
+        }
+
+        &.sort-desc,
+        &.sort-asc {
+          text-shadow: none;
+          background-color: transparent;
+          color: $brand-primary;
+          border-bottom: 3px solid $brand-primary;
+          padding-bottom: 4px;
+
+          .sort-indicator {
+            &:after,
+            &:before {
+              border-color: $brand-primary transparent;
+              opacity: 1;
+            }
+            &:before {
+              border-top-color: $brand-primary;
+            }
+          }
+        }
+        .sort-indicator {
+          display: block;
+          &:after,
+          &:before {
+            border-color: $font-color transparent;
+          }
+        }
+      }
+    }
+    tbody {
+      >tr {
+        td,
+        th {
+          &.actions {
+            width: 200px;
+            >a,
+            >button {
+              text-transform: uppercase;
+              font-weight: $font-weight-bold;
+              font-size: 12px;
+              display: inline-block;
+              padding: 0 10px;
+              color: $font-color;
+
+              &:hover {
+                text-decoration: none;
+              }
+              &.edit:hover {
+                color: $cyan!important;
+              }
+              &.delete:hover {
+                color: $brand-danger!important;
+              }
+              &.clone:hover,
+              &.passReset:hover {
+                color: $brand-warning!important;
+              }
+
+              &:disabled:hover {
+                color: $font-color!important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.fileupload.drop-box {
+  border: 2px dashed #ccc;
+  margin-top: 10px;
+  padding: 30px;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: #777;
+  font-size: 16px;
+  background-color: #f4f4f4;
+
+  &.dragover {
+    background-color: #fff;
+  }
+}
+
+.thumbs-list {
+  >li {
+    position: relative;
+    padding: 0;
+    margin: 5px;
+    img {
+
+    }
+    button {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      opacity: 0;
+      background-color: rgba(0,0,0,.65);
+      @include transition(all .25s linear);
+      color: white;
+      font-size: 36px;
+    }
+    &:hover {
+      button {
+        color: white;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.page-products {
+  .slick-list {
+    .slick-track {
+      .slick-slide {
+        min-height: 100%;
+        img {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+div.dropdown.rounded-dropdown {
+  display: inline-block;
+
+  button {
+    margin-right: 0;
+    padding: 5px 15px;
+    @include transition(all .25s linear);
+
+    .glyphicons {
+      line-height: 18px;
+    }
+
+    i {
+      font-size: 12px;
+      color: #777;
+      margin-left: 5px;
+      vertical-align: top;
+      margin-top: 4px;
+    }
+
+    &.btn-sm {
+      padding: 1px 10px;
+
+      +.dropdown-menu {
+        border-radius: 0 0 10px 10px;
+      }
+
+      i {
+        margin-top: 3px;
+        font-size: 10px;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    border-radius: 0 0 20px 20px;
+    margin: 0;
+    padding: 5px 0;
+    border-top: 0;
+    box-shadow: none;
+    min-width: 0;
+    width: 100%;
+    border-color: #adadad;
+    margin-top: -1px;
+
+    >li {
+      >a {
+        color: #19191b;
+        padding: 5px 15px;
+        font-size: 12px;
+
+        .glyphicons {
+          font-size: 14px;
+        }
+
+        &:hover {
+          background-color: transparent;
+          color: $active-el;
+        }
+      }
+    }
+  }
+
+  &.open {
+    button {
+      border-radius: 20px 20px 0 0;
+      border-bottom: 1px solid transparent;
+      background-color: white;
+
+      &.btn {
+        border-radius: 10px 10px 0 0;
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: white;
+      }
+    }
+  }
+}
+
+.tile-chart {
+  .tile-header {
+    padding-top: 30px;
+
+    h4 {
+      font-size: 20px;
+      color: #19191b;
+      letter-spacing: -1px;
+    }
+
+    .controls {
+      top: 30px;
+      right: 15px;
+      font-size: 18px;
+
+      div.dropdown {
+        display: inline-block;
+
+        button {
+          margin-right: 0;
+          padding: 5px 15px;
+          @include transition(all .25s linear);
+
+          >.glyphicons {
+            line-height: 18px;
+          }
+
+          >i {
+            font-size: 12px;
+            color: #777;
+            margin-left: 5px;
+            vertical-align: top;
+            margin-top: 4px;
+          }
+        }
+
+        .dropdown-menu {
+          border-radius: 0 0 20px 20px;
+          margin: 0;
+          padding: 5px 0;
+          border-top: 0;
+          box-shadow: none;
+          min-width: 0;
+          width: 100%;
+          border-color: #adadad;
+          margin-top: -1px;
+
+          >li {
+            >a {
+              color: #19191b;
+              padding: 5px 15px;
+              font-size: 12px;
+
+              .glyphicons {
+                font-size: 14px;
+              }
+
+              &:hover {
+                background-color: transparent;
+                color: $active-el;
+              }
+            }
+          }
+        }
+
+        &.open {
+          button {
+            border-radius: 20px 20px 0 0;
+            border-bottom: 1px solid transparent;
+            background-color: white;
+
+            &:hover,
+            &:focus,
+            &:active {
+              background-color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}

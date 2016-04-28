@@ -1,0 +1,72 @@
+<div class="page page-settings">
+
+  <div class="pageheader">
+
+    <h2>Settings</h2>
+
+    <div class="page-bar">
+
+      <ul class="page-breadcrumb">
+        <li>
+          <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
+        </li>
+        <li>
+          <a ui-sref="app.settings">Settings</a>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="pagecontent">
+
+    <!-- row -->
+    <div class="row">
+
+
+      <div class="col-md-6">
+
+        <!-- tile -->
+        <section class="tile">
+
+          <!-- tile header -->
+          <div class="tile-header dvd dvd-btm">
+            <h1 class="custom-font"><strong>Global</strong> Settings</h1>
+          </div>
+          <!-- /tile header -->
+
+          <!-- tile body -->
+          <div class="tile-body">
+
+            <form name="settingsForm" class="form form-horizontal">
+
+              <div class="form-group">
+                <label for="vat" class="col-sm-3 control-label">Global VAT <span class="text-danger" style="font-size: 15px;">*</span></label>
+                <div class="col-sm-9">
+                  <input type="number" name="vat" class="form-control" id="vat" placeholder="Set global VAT value..." ng-model="settings.globalVAT" required>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+          <!-- /tile body -->
+
+          <div class="tile-footer text-right bg-tr-black lter dvd dvd-top">
+            <!-- SUBMIT BUTTON -->
+            <button class="btn btn-success" ng-click="saveSettings()" ng-disabled="settingsForm.$invalid">Save</button>
+          </div>
+
+        </section>
+        <!-- /tile -->
+
+      </div>
+
+    </div>
+    <!-- /row -->
+
+  </div>
+
+</div>
+
