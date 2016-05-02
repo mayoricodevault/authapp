@@ -1,7 +1,12 @@
 'use strict';
 
 app
-  .controller('NavCtrl', function ($scope) {
+  .controller('NavCtrl', function ($scope, auth) {
+    $scope.profile={};
+    if (auth.isAuthenticated) {
+        $scope.profile = auth.profile;
+    }
+
     $scope.oneAtATime = false;
 
     $scope.status = {
@@ -9,4 +14,6 @@ app
       isSecondOpen: true,
       isThirdOpen: true
     };
+
+
   });

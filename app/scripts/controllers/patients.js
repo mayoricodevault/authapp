@@ -1,140 +1,69 @@
 'use strict';
-
 app
+  .controller('PatientsCtrl', ['$scope', '$state', '$stateParams', 'Patients', '$filter', 'auth',
+    function($scope, $state, $stateParams, Patients, $filter, auth) {
+        $scope.AllPatients=[];
+        $scope.patient=[];
+        $scope.user = auth;
 
-  .controller('ProductsCtrl', ['$scope', '$state', '$stateParams', '$firebaseArray', '$firebaseObject', 'FBURL', '$filter', 'uploadImage', 'user',
-    function($scope, $state, $stateParams, $firebaseArray, $firebaseObject, FBURL, $filter, uploadImage, user) {
-
-      // General database variable
-      var ref = new Firebase(FBURL);
-      $scope.products = $firebaseArray(ref.child('products'));
-      $scope.productsObject = $firebaseObject(ref.child('products'));
-
-      $scope.categories = $firebaseArray(ref.child('categories'));
-      $scope.categoriesObject = $firebaseObject(ref.child('categories'));
-      //////////////////////////// *General database variable
-
-      $scope.user = user;
-
-      // get the model
       if($stateParams.id) {
         var id = $stateParams.id;
-        $scope.product = $firebaseObject(ref.child('products').child(id));
+
+        var sql =  'thingTypeId=4&_id='+id;
+        $scope.AllPatients = new Patients();
+        $scope.AllPatients.$find({where : sql}).success(function(results) {
+          var current =$scope.AllPatients.$fetch();
+          $scope.patient = current.$toObject();
+        });
+
       } else {
-        $scope.product = {};
+        $scope.patients = [];
       }
 
-      $scope.categories.$loaded().then(function() {
-        $scope.childCategories = [];
-        //extend array
-        angular.forEach($scope.categories, function (value, key) {
-          if (value.parentId && $scope.categoriesObject[value.parentId]) {
-            value.parentName = $scope.categoriesObject[value.parentId].name;
-            $scope.childCategories.push(value);
-          } else {
-            if ($filter('filter')($scope.categories, {parentId: value.$id}).length === 0) {
-              $scope.childCategories.push(value);
-            }
-          }
-        });
-      });
-
-      $scope.units = {
-        pc: "Piece",
-        kg: "Kilogram",
-        g: "Gram",
-        m: "Meter",
-        l: "Liter"
-      };
-
-      $scope.statuses = {
-        published: "published",
-        notPublished: "not published",
-        banned: "banned"
-      };
-
-      $scope.uploadImages = function (files, user, cb) {
-        if (files && files.length) {
-          uploadImage.uploadMultiple(files, user, cb);
-        }
-      };
 
     }])
 
-  .controller('ProductsListCtrl', ['$scope', '$filter', 'ngTableParams', 'toastr',
-    function($scope, $filter, ngTableParams, toastr) {
+  .controller('PatientsListCtrl', ['$scope', '$filter', 'ngTableParams', 'toastr', 'Patients',
+    function($scope, $filter, ngTableParams, toastr, Patients) {
+      $scope.patients = [];
+      $scope.AllPatients = new Patients();
 
-      //////////////////////////////////////////
-      //************ Table Settings **********//
-      //////////////////////////////////////////
-
-      // Delete CRUD operation
-      $scope.delete = function (product) {
-        if (confirm('Are you sure?')) {
-          $scope.products.$remove(product).then(function () {
-            console.log('product deleted');
-            toastr.success('Product Removed!', 'Product has been removed');
-          });
+      $scope.AllPatients.$find({where : 'thingTypeId=4'}).success(function(results) {
+        var current;
+        while(current = $scope.AllPatients.$fetch()) { //fetching on masters object
+          $scope.patients.push(current.$toObject());
         }
-      };
-      //////////////////////////// *Delete CRUD operation
-
-
-      // Initialize table
-      $scope.products.$loaded().then(function() {
-
-        //extend array
-        function extendArray(){
-          angular.forEach($scope.products, function(value, key){
-            if (value.categoryId && $scope.categoriesObject[value.categoryId]) {
-              value.categoryName = $scope.categoriesObject[value.categoryId].name;
-            }
-          });
-        }
-        extendArray();
-        ///////////////////////////////////////////// *extend array
-
-        // watch data in scope, if change reload table
-        $scope.$watchCollection('products', function(newVal, oldVal){
-          if (newVal !== oldVal) {
-            extendArray();
-            $scope.tableParams.reload();
-          }
-        });
-
         $scope.$watch('searchText', function(newVal, oldVal){
           if (newVal !== oldVal) {
             $scope.tableParams.reload();
           }
         });
-        ///////////////////////////////////////////// *watch data in scope, if change reload table
-
         $scope.tableParams = new ngTableParams({
-          page: 1,            // show first page
-          count: 10,          // count per page
-          sorting: {
-            id: 'asc'     // initial sorting
-          }
-        }, {
-          total: $scope.products.length, // length of data
-          getData: function($defer, params) {
-            // use build-in angular filter
-            var orderedData = params.sorting() ?
-              $filter('orderBy')($scope.products, params.orderBy()) :
-              $scope.products;
+              page: 1,            // show first page
+              count: 10,          // count per page
+              sorting: {
+                id: 'asc'     // initial sorting
+              }
+            }, {
+              total: $scope.patients.length, // length of data
+              getData: function($defer, params) {
+                // use build-in angular filter
+                var orderedData = params.sorting() ?
+                  $filter('orderBy')($scope.patients, params.orderBy()) :
+                    $scope.patients;
 
-            orderedData	= $filter('filter')(orderedData, $scope.searchText);
-            params.total(orderedData.length);
+                orderedData	= $filter('filter')(orderedData, $scope.searchText);
+                params.total(orderedData.length);
 
-            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-          }
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+              }
         });
       });
-      ////////////////////////////////////////// *Initialize table
+
 
     }])
 
-  .controller('NewProductCtrl', ['$scope', 'toastr', '$state', 'FBURL', '$filter',
+  .controller('NewPatientCtrl', ['$scope', 'toastr', '$state', 'FBURL', '$filter',
     function($scope, toastr, $state, FBURL, $filter) {
 
       var ref = new Firebase(FBURL);
@@ -189,49 +118,25 @@ app
 
     }])
 
-  .controller('EditProductCtrl', ['$scope', '$firebaseObject', 'toastr', '$state', 'FBURL', '$filter',
-    function($scope, $firebaseObject, toastr, $state, FBURL, $filter) {
-
-      var ref = new Firebase(FBURL);
-
+  .controller('EditPatientCtrl', ['$scope', 'toastr', '$state', '$filter',
+    function($scope, toastr, $state, $filter) {
+        console.log($scope.patient);
       $scope.editing = true;
-
-      $scope.products.$loaded(function(){
-        // Submit operation
-        $scope.ok = function(form) {
-
-          function save(){
-            $scope.product.$save().then(function (productRef) {
-              ref.child('products').child(productRef.key())
-                .update({updated_at: Firebase.ServerValue.TIMESTAMP});
-              toastr.success('Product Saved!', 'Product has been saved');
-              $state.go('app.products.list', {}, {reload: true});
-            });
-          }
-
-          var x = 0;
-          var cb = function(filelink){
-            $scope.product.images[x] = {};
-            $scope.product.images[x].src = filelink;
-            x++;
-            if ($scope.product.images.length === x) {
-              save();
-            }
-          };
-
-          if (form.images.$modelValue[0] && form.images.$modelValue[0].$ngfDataUrl && form.images.$valid) {
-            $scope.uploadImages($scope.product.images, $scope.user, cb);
-          } else {
-            save();
-          }
-
-        };
-        /////////////////////// *Submit operation
-      });
-
+      if ($scope.patient) {
+          $scope.ok = function(form) {
+              function save(){
+                $scope.product.$save().then(function (productRef) {
+                  //ref.child('products').child(productRef.key())
+                  //  .update({updated_at: Firebase.ServerValue.TIMESTAMP});
+                  //toastr.success('Product Saved!', 'Product has been saved');
+                  $state.go('app.patients.list', {}, {reload: true});
+                });
+              }
+            };
+      }
     }])
 
-  .controller('ShowProductCtrl', ['$scope', '$firebaseObject', 'toastr', '$state', 'FBURL', '$stateParams',
+  .controller('ShowPatientCtrl', ['$scope', '$firebaseObject', 'toastr', '$state', 'FBURL', '$stateParams',
     function($scope, $firebaseObject, toastr, $state, FBURL, $stateParams) {
 
 

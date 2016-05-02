@@ -19,8 +19,43 @@ var app = angular
     'angles',
     'auth0',
     'angular-storage',
-    'angular-jwt'
-  ])
+    'angular-jwt',
+    'CoreModel',
+    'environment'
+  ]).config(function(envServiceProvider) {
+        envServiceProvider.config({
+            domains: {
+                development: 'localhost',
+                production:  '52.38.207.25',
+                demo:  '52.73.55.136'
+            },
+            vars: {
+                development: {
+                    loginApi: '',
+                    coreServicesUrl : 'http://52.73.55.136:8080/riot-core-services/api/',
+                    api_key : 'root',
+                    debug : true,
+                    app_version : '1.0.0'
+                },
+                production: {
+                    loginApi: '',
+                    coreServicesUrl :'http://52.38.207.25:8080/riot-core-services/api/',
+                    api_key : 'root',
+                    debug : true,
+                    app_version : '1.0.0'
+                },
+                demo: {
+                    loginApi: '',
+                    coreServicesUrl :'http://52.73.55.136:8080/riot-core-services/api/',
+                    api_key : 'root',
+                    debug : true,
+                    app_version : '1.0.0'
+                }
+            }
+        });
+        envServiceProvider.check();
+    })
+
 .config( function ( $stateProvider, authProvider, $httpProvider, $locationProvider, jwtInterceptorProvider) {
 
 
@@ -42,42 +77,42 @@ var app = angular
             }
         })
 
-        .state('app.products', {
+        .state('app.patients', {
             abstract: true,
-            url: '/products',
+            url: '/patients',
             template: '<div ui-view></div>',
             data: {
                 requiresLogin: true
             }
         })
-        .state('app.products.list', {
+        .state('app.patients.list', {
             url: '/list',
-            controller: 'ProductsCtrl',
-            templateUrl: 'views/pages/products/list.html',
+            controller: 'PatientsCtrl',
+            templateUrl: 'views/pages/patients/list.html',
             data: {
                 requiresLogin: true
             }
         })
-        .state('app.products.new', {
+        .state('app.patients.new', {
             url: '/new',
-            controller: 'ProductsCtrl',
-            templateUrl: 'views/pages/products/new.html',
+            controller: 'PatientsCtrl',
+            templateUrl: 'views/pages/patients/new.html',
             data: {
                 requiresLogin: true
             }
         })
-        .state('app.products.edit', {
+        .state('app.patients.edit', {
             url: '/edit/:id',
-            controller: 'ProductsCtrl',
-            templateUrl: 'views/pages/products/edit.html',
+            controller: 'PatientsCtrl',
+            templateUrl: 'views/pages/patients/edit.html',
             data: {
                 requiresLogin: true
             }
         })
-        .state('app.products.show', {
+        .state('app.patients.show', {
             url: '/show/:id',
-            controller: 'ProductsCtrl',
-            templateUrl: 'views/pages/products/show.html',
+            controller: 'PatientsCtrl',
+            templateUrl: 'views/pages/patients/show.html',
             data: {
                 requiresLogin: true
             }
@@ -116,7 +151,9 @@ var app = angular
                 requiresLogin: false
             }
         });
-    //$urlRouterProvider.otherwise('app');
+
+    //$stateProvider.otherwise('/app/dashboard');
+
     authProvider.init({
         domain: AUTH0_DOMAIN,
         clientID: AUTH0_CLIENT_ID,
@@ -148,29 +185,44 @@ var app = angular
 
     // Add a simple interceptor that will fetch all requests and add the jwt token to its authorization header.
     // NOTE: in case you are calling APIs which expect a token signed with a different secret, you might
-    // want to check the delegation-token example
+    // want to check the delegation-tok
+    //
+    // en example
     $httpProvider.interceptors.push('jwtInterceptor');
 
-}).run(function($rootScope, $state, auth, store, jwtHelper,loginRedirectPath, $stateParams  ) {
+})
+    .config(function($httpProvider) {
+        var api_key = 'root';
+        $httpProvider.defaults.headers.common["x-pm-appversion"] = 'tb_' + '1.0.0';
+        $httpProvider.defaults.headers.common["x-pm-apiversion"] = '1.0.0';
+        $httpProvider.defaults.withCredentials = true;
+        if (angular.isUndefined($httpProvider.defaults.headers.get)) {
+            $httpProvider.defaults.headers.get = {};
+        }
+        //disable IE ajax request caching (don't use If-Modified-Since)
+        $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+        $httpProvider.defaults.headers.get['api_key'] = api_key;
+        $httpProvider.defaults.headers.get['content-type'] = 'application/json';
+        $httpProvider.defaults.headers.get.Pragma = 'no-cache';
+    })
+
+    .run(function($rootScope, $state, auth, store, jwtHelper,loginRedirectPath, $stateParams  ) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.$on('$stateChangeStart', function(event) {
         var token = store.get('token');
         if (token) {
-            console.log(jwtHelper.isTokenExpired(token));
+            //console.log(jwtHelper.isTokenExpired(token));
             if (!jwtHelper.isTokenExpired(token)) {
-                console.log(auth.isAuthenticated);
+                //console.log(auth.isAuthenticated);
                 if (!auth.isAuthenticated) {
                     auth.authenticate(store.get('profile'), token);
                 }
-            } else {
-                // Either show the login page or use the refresh token to get a new idToken
-                $state.go('core.login');
             }
         }
     });
     $rootScope.$on('$stateChangeSuccess', function(event, toState) {
-        console.log(toState);
+        //console.log(toState);
         event.targetScope.$watch('$viewContentLoaded', function () {
             angular.element('html, body, #content').animate({ scrollTop: 0 }, 200);
             setTimeout(function () {

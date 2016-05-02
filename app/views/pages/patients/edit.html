@@ -1,20 +1,17 @@
-<div class="page page-products" ng-controller="EditProductCtrl">
+<div class="page page-products" ng-controller="EditPatientCtrl">
 
   <div class="pageheader">
 
-    <h2>Edit Product | {{product.name}}</h2>
+    <h2>Edit | {{patient.name}}</h2>
 
     <div class="page-bar">
 
       <ul class="page-breadcrumb">
         <li>
-          <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
+          <a ui-sref="app.patients.list">Manage Patients</a>
         </li>
         <li>
-          <a ui-sref="app.products.list">Manage Products</a>
-        </li>
-        <li>
-          <a ui-sref="app.products.edit({ id: product.$id })">{{product.name}}</a>
+          <a ui-sref="app.products.edit({ id: product.$id })">{{patient.name}}</a>
         </li>
       </ul>
 
@@ -33,7 +30,7 @@
 
 
         <!-- tile body -->
-        <div class="tile-body" ng-include="'views/pages/products/_form.html'">
+        <div class="tile-body" ng-include="'views/pages/patients/_form.html'">
 
 
 

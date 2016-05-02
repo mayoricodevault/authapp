@@ -5,8 +5,8 @@
 (function(){
     "use strict";
 
-    angular.module('ModelCore', ['ng'])
-        .factory('ModelCore', [
+    angular.module('CoreModel', ['ng'])
+        .factory('CoreModel', [
             '$http',
             '$q',
             '$filter',
@@ -722,7 +722,6 @@
                     //Define references to it's masters methods
                     self.__super__ = parent.prototype;
 
-                    //Uffff... it's done
                     return self;
                 };
 

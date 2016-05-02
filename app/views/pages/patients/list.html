@@ -1,83 +1,53 @@
-<div class="page page-products" ng-controller="ProductsListCtrl">
-
-  <div class="pageheader">
-
-    <h2>Manage Products</h2>
-
-    <div class="page-bar">
-
-      <ul class="page-breadcrumb">
-        <li>
-          <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
-        </li>
-        <li>
-          <a ui-sref="app.products.list">Manage Products</a>
-        </li>
-      </ul>
-
-    </div>
-
-  </div>
-
+<div class="page page-products" ng-controller="PatientsListCtrl">
   <!-- row -->
   <div class="row">
-
-
     <div class="col-md-12">
-
       <!-- tile -->
       <section class="tile" fullscreen="isFullscreen01">
-
         <!-- tile header -->
         <div class="tile-header dvd dvd-btm">
-          <h1 class="custom-font"><strong>Manage </strong>Products</h1>
+          <h1 class="custom-font"><strong>Manage </strong>Patients</h1>
           <ul class="controls">
 
-            <li><button class="btn-nostyle" ui-sref="app.products.new"><i class="fa fa-plus mr-5"></i> Add Product</button></li>
+            <li><button class="btn-nostyle" ui-sref="app.patients.new"><i class="fa fa-plus mr-5"></i> Add</button></li>
 
           </ul>
         </div>
         <!-- /tile header -->
-
         <!-- tile body -->
         <div class="tile-body">
-
-
           <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-6">
               <input type="text" class="form-control underline-input w-md pull-right mb-20" placeholder="Search..." ng-model="searchText">
             </div>
           </div>
-
           <div class="table-responsive">
             <table ng-table="tableParams" class="table table-custom" template-pagination="custom/pager">
-              <tr ng-repeat="product in $data">
-                <td data-title="'ID'" sortable="'id'">
-                  {{product.id}}
+              <tr ng-repeat="patient in $data">
+                <td data-title="'ID'" sortable="'_id'">
+                  {{patient._id}}
                 </td>
                 <td data-title="'Name'" sortable="'name'">
-                  <a href="javascript:;" ui-sref="app.products.show({ id: product.$id })">{{product.name}}</a>
+                  <a href="javascript:;" ui-sref="app.patients.show({ id: patient._id })">{{patient.name}}</a>
                 </td>
-                <td data-title="'Category'" sortable="'categoryName'">
-                  {{product.categoryName}}
+                <td data-title="'Short'" sortable="'ShortName'">
+                  {{patient.ShortName}}
                 </td>
-                <td data-title="'Price'" sortable="'price'">
-                  {{product.price | currency}}
+                <td data-title="'Patient Active'" sortable="'PatientActive'">
+                  {{patient.PatientActive}}
                 </td>
-                <td data-title="'Date Created'" sortable="'created_at'">
-                  {{product.created_at | date: 'mediumDate'}}
+                <td data-title="'DOB'" sortable="'DOB'">
+                  {{patient.DOB | date: 'mediumDate'}}
                 </td>
-                <td data-title="'Status'" sortable="'status'">
-                  <span class="label" ng-class="{'bg-success' : product.status == 'published','bg-warning' : product.status == 'not published','bg-lightred' : product.status == 'banned'}">
-                    {{ product.status }}
+                <td data-title="'Status'" sortable="'AlertStatus'">
+                  <span class="label" ng-class="{'bg-success' : patient.AlertStatus == 'false','bg-warning' : patient.status == 'true','bg-lightred' : product.status == null}">
+                    {{ patient.AlertStatus }}
                   </span>
                 </td>
                 <td data-title="'Actions'" class="actions">
-                  <button class="btn-nostyle edit" ui-sref="app.products.edit({ id: product.$id })">Edit</button>
-                  <button class="btn-nostyle delete" ng-click="delete(product)">Delete</button>
+                  <button class="btn-nostyle edit" ui-sref="app.patients.edit({ id: patient._id })">Edit</button>
                 </td>
-
               </tr>
             </table>
             <script type="text/ng-template" id="custom/pager">
@@ -107,18 +77,12 @@
                 </ul>
               </div>
             </script>
-
           </div>
-
-
         </div>
         <!-- /tile body -->
-
       </section>
       <!-- /tile -->
-
     </div>
-
   </div>
   <!-- /row -->
 

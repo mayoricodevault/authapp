@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body id="{{main.appName}}" class="{{main.settings.navbarHeaderColor}} {{main.settings.activeColor}} {{containerClass}} header-fixed aside-fixed rightbar-hidden appWrapper" ng-class="{'header-fixed': main.settings.headerFixed, 'header-static': !main.settings.headerFixed, 'aside-fixed': main.settings.asideFixed, 'aside-static': !main.settings.asideFixed, 'rightbar-show': main.settings.rightbarShow, 'rightbar-hidden': !main.settings.rightbarShow}" ng-cloak >
+  <body id="{{main.appName}}" class="{{main.settings.navbarHeaderColor}} {{main.settings.activeColor}} {{containerClass}} header-fixed aside-fixed rightbar-hidden appWrapper" ng-class="{'header-fixed': main.settings.headerFixed, 'header-static': !main.settings.headerFixed, 'aside-fixed': main.settings.asideFixed, 'aside-static': !main.settings.asideFixed, 'rightbar-show': main.settings.rightbarShow, 'rightbar-hidden': !main.settings.rightbarShow }" ng-cloak>
 
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -81,26 +81,26 @@
     <script src="bower_components/auth0-angular/build/auth0-angular.js"></script>
     <script src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
     <script src="bower_components/chosen_v1.4.2/chosen.jquery.min.js"></script>
+    <script src="bower_components/angular-environment/dist/angular-environment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/auth-variables.js"></script>
         <script src="scripts/app.js"></script>
-
+        <script src="scripts/modules/CoreModel.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/controllers/auth.js"></script>
         <script src="scripts/controllers/nav.js"></script>
         <script src="scripts/controllers/dashboard.js"></script>
-        <script src="scripts/controllers/products.js"></script>
+        <script src="scripts/controllers/patients.js"></script>
         <script src="scripts/controllers/profile.js"></script>
         <script src="scripts/controllers/settings.js"></script>
         <script src="scripts/services/fbutils.js"></script>
         <script src="scripts/services/digits.js"></script>
-        <script src="scripts/services/s3upload.js"></script>
+    <script src="scripts/services/Patients.js"></script>
         <script src="scripts/services/ngcloak-decorator.js"></script>
         <script src="scripts/directives/navcollapse.js"></script>
-
         <script src="scripts/directives/ripple.js"></script>
         <script src="scripts/directives/collapsesidebar.js"></script>
         <script src="scripts/directives/tilecontrolclose.js"></script>

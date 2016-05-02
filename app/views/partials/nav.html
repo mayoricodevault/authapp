@@ -8,9 +8,30 @@
       </uib-accordion-heading>
       <ul id="navigation" nav-collapse ripple>
         <li ui-sref-active="active"><a ui-sref="app.dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li ng-class="{'active':$state.includes('app.products')}"><a ui-sref="app.products.list"><i class="fa fa-gift"></i> <span>Patients</span></a></li>
+        <li ng-class="{'active':$state.includes('app.patients')}"><a ui-sref="app.patients.list"><i class="fa fa-gift"></i> <span>Patients</span></a></li>
         <li ng-class="{'active':$state.includes('app.settings')}"><a ui-sref="app.settings"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
       </ul>
+    </uib-accordion-group>
+
+    <uib-accordion-group is-open="status.isThirdOpen" class="settings">
+      <uib-accordion-heading>
+        General Settings <i class="pull-right fa" ng-class="{'fa-angle-up': status.isThirdOpen, 'fa-angle-down': !status.isThirdOpen}"></i>
+      </uib-accordion-heading>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-xs-8 control-label">{{settings.currentDomain}}</label>
+          <div class="col-xs-4 control-label">
+            <div class="onoffswitch greensea">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-on" checked="" disabled>
+              <label class="onoffswitch-label" for="switch-on">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </uib-accordion-group>
 
   </uib-accordion>

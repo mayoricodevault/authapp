@@ -34,7 +34,8 @@
 
 #header {
   background-color: $header-bg;
-  z-index: 1001;
+  z-index: 10;
+  height:50px;
   @include transition(right .25s $ease-in-circ, padding-right .25s $ease-in-circ);
 
   .branding {
@@ -123,6 +124,7 @@
     >li {
       margin-top: 3px;
       vertical-align: top;
+      height: 10px;
       background-color: $header-bg;
 
       >a {
@@ -312,8 +314,8 @@
         }
 
         .nav-right {
-           float: left!important;
-           padding-left: 10px;
+          float: left!important;
+          padding-left: 10px;
 
           .nav-profile {
             position: absolute;
@@ -321,14 +323,14 @@
             right: 40px;
 
             >a>span {
-             display: none;
+              display: none;
             }
 
             .dropdown-menu {
               left: auto;
               right: 0;
 
-               &.with-arrow {
+              &.with-arrow {
                 &:before {
                   right: 12px;
                   left: auto;
@@ -429,25 +431,25 @@
     &.sidebar-xs {
       #header {
         .nav-right {
-           >li {
-             position: static!important;
+          >li {
+            position: static!important;
 
-             &.toggle-right-sidebar {
-               position: absolute!important;
-             }
+            &.toggle-right-sidebar {
+              position: absolute!important;
+            }
 
-             .dropdown-menu {
-               left: 0!important;
-               right: 0!important;
+            .dropdown-menu {
+              left: 0!important;
+              right: 0!important;
 
-               &.with-arrow {
-                 &:before,
-                 &:after {
-                   display: none!important;
-                 }
-               }
-             }
-           }
+              &.with-arrow {
+                &:before,
+                &:after {
+                  display: none!important;
+                }
+              }
+            }
+          }
         }
       }
     }

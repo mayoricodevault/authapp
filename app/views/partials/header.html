@@ -1,4 +1,4 @@
-<header class="clearfix">
+<header class="clearfix" ng-controller="NavCtrl">
 
   <!-- Branding -->
   <div class="branding">
@@ -25,8 +25,8 @@
     <li class="dropdown nav-profile" uib-dropdown on-toggle="toggled(open)">
 
       <a href class="dropdown-toggle" uib-dropdown-toggle>
-        <img src="images/placeholder-avatar.png" alt="" class="img-circle size-30x30" ng-if="!profile.avatar">
-        <img ng-src="{{profile.avatar}}" alt="" class="img-circle size-30x30" ng-if="profile.avatar">
+        <img src="images/placeholder-avatar.png" alt="" class="img-circle size-30x30" ng-if="!profile.picture">
+        <img ng-src="{{profile.picture}}" alt="" class="img-circle size-30x30" ng-if="profile.picture">
         <span>{{profile.name || profile.email}} <i class="fa fa-angle-down"></i></span>
       </a>
 
